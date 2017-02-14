@@ -15,6 +15,7 @@
 		A977ADF51E52B11D00D7EAD4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A977ADF31E52B11D00D7EAD4 /* LaunchScreen.storyboard */; };
 		A977AE011E52B16500D7EAD4 /* NCUException.m in Sources */ = {isa = PBXBuildFile; fileRef = A977ADFE1E52B16500D7EAD4 /* NCUException.m */; };
 		A977AE021E52B16500D7EAD4 /* NCUException+Test.m in Sources */ = {isa = PBXBuildFile; fileRef = A977AE001E52B16500D7EAD4 /* NCUException+Test.m */; };
+		A977AE2C1E52C0E100D7EAD4 /* NSException+Signal.m in Sources */ = {isa = PBXBuildFile; fileRef = A977AE2B1E52C0E100D7EAD4 /* NSException+Signal.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,8 @@
 		A977ADFE1E52B16500D7EAD4 /* NCUException.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NCUException.m; sourceTree = "<group>"; };
 		A977ADFF1E52B16500D7EAD4 /* NCUException+Test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NCUException+Test.h"; sourceTree = "<group>"; };
 		A977AE001E52B16500D7EAD4 /* NCUException+Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NCUException+Test.m"; sourceTree = "<group>"; };
+		A977AE2A1E52C0E100D7EAD4 /* NSException+Signal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSException+Signal.h"; sourceTree = "<group>"; };
+		A977AE2B1E52C0E100D7EAD4 /* NSException+Signal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSException+Signal.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +94,8 @@
 		A977ADFC1E52B16500D7EAD4 /* NCUException */ = {
 			isa = PBXGroup;
 			children = (
+				A977AE2A1E52C0E100D7EAD4 /* NSException+Signal.h */,
+				A977AE2B1E52C0E100D7EAD4 /* NSException+Signal.m */,
 				A977ADFD1E52B16500D7EAD4 /* NCUException.h */,
 				A977ADFE1E52B16500D7EAD4 /* NCUException.m */,
 			);
@@ -168,6 +173,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A977AE2C1E52C0E100D7EAD4 /* NSException+Signal.m in Sources */,
 				A977ADED1E52B11D00D7EAD4 /* ViewController.m in Sources */,
 				A977ADEA1E52B11D00D7EAD4 /* AppDelegate.m in Sources */,
 				A977AE011E52B16500D7EAD4 /* NCUException.m in Sources */,
@@ -331,6 +337,7 @@
 				A977ADFB1E52B11D00D7EAD4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

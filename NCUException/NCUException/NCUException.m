@@ -8,9 +8,9 @@
 
 
 #import "NCUException.h"
+#import "NSException+Signal.h"
 #import <UIKit/UIKit.h>
-#include <libkern/OSAtomic.h>
-#include <execinfo.h>
+
 #pragma mark - NCUException
 
 @interface NCUException()
@@ -85,89 +85,7 @@
 static _NCUException* _uException = nil;
 
 void _NCUExceptionHandler(NSException *exception) {
-    NCUException * ue = [[NCUException alloc] init];
-    ue.callStackSymbols = [exception callStackSymbols];
-    ue.callStackReturnAddresses = [exception callStackReturnAddresses];
-    ue.reason = [exception reason];
-    ue.name = [exception name];
-    ue.userInfo = [exception userInfo];
-    [_uException performSelectorOnMainThread:@selector(exception:) withObject:ue waitUntilDone:YES];
-}
-
-//当前处理的异常个数
-volatile int32_t UncaughtExceptionCount = 0;
-//最大能够处理的异常个数
-volatile int32_t UncaughtExceptionMaximum = 10;
-//SIGABRT 程序由于abort()函数调用发生的程序中止信号
-//SIGILL 程序由于非法指令产生的程序中止信号
-//SIGSEGV 程序由于无效内存的引用导致的程序中止信号
-//SIGFPE 程序由于浮点数异常导致的程序中止信号
-//SIGBUS 程序由于内存地址未对齐导致的程序中止信号
-//SIGPIPE 程序通过端口发送消息失败导致的程序中止信号
-
-void _NSSExceptionHandler(int signal) {
-    //获取堆栈
-    void* callstack[128];
-    int frames = backtrace(callstack, 128);
-    char **strs = backtrace_symbols(callstack, frames);
-    long i;
-    NSMutableArray *callStackSymbols = [NSMutableArray arrayWithCapacity:frames];
-    for (i = 0; i < frames; i++) {
-        [callStackSymbols addObject:[NSString stringWithUTF8String:strs[i]]];
-    }
-    free(strs);
-
-    #pragma clang diagnostic push
-    #pragma clang diagnostic ignored "-Wdeprecated-declarations"
-    int32_t exceptionCount = OSAtomicIncrement32(&UncaughtExceptionCount);
-    #pragma clang diagnostic pop
-    
-    if (exceptionCount > UncaughtExceptionMaximum) {
-        return;
-    }
-    NSMutableDictionary *userInfo =[NSMutableDictionary dictionaryWithObject:[NSNumber numberWithInt:signal] forKey:@"signal"];
-    
-    NSString *name = @"SignalException";
-    switch (signal) {
-        case SIGABRT:
-            name = [name stringByAppendingFormat:@"_%@", @"SIGABRT"];
-            break;
-        case SIGILL:
-            name = [name stringByAppendingFormat:@"_%@", @"SIGILL"];
-            break;
-        case SIGSEGV:
-            name = [name stringByAppendingFormat:@"_%@", @"SIGSEGV"];
-            break;
-        case SIGFPE:
-            name = [name stringByAppendingFormat:@"_%@", @"SIGFPE"];
-            break;
-        case SIGBUS:
-            name = [name stringByAppendingFormat:@"_%@", @"SIGBUS"];
-            break;
-        case SIGPIPE:
-            name = [name stringByAppendingFormat:@"_%@", @"SIGPIPE"];
-            break;
-        case SIGHUP:
-            name = [name stringByAppendingFormat:@"_%@", @"SIGHUP"];
-            break;
-        case SIGINT:
-            name = [name stringByAppendingFormat:@"_%@", @"SIGINT"];
-            break;
-        case SIGQUIT:
-            name = [name stringByAppendingFormat:@"_%@", @"SIGQUIT"];
-            break;
-        default:
-            break;
-    }
-    
-    NCUException * ue = [[NCUException alloc] init];
-    ue.callStackSymbols = [callStackSymbols copy];
-    ue.reason = [NSString stringWithFormat:@"Signal %d was raised.",signal];
-    ue.name = name;
-    ue.userInfo = userInfo;
-    ue.isSignal = YES;
-    
-    [_uException performSelectorOnMainThread:@selector(exception:) withObject:ue waitUntilDone:YES];
+    [_uException performSelectorOnMainThread:@selector(exception:) withObject:exception waitUntilDone:YES];
 }
 
 @implementation _NCUException
@@ -183,7 +101,7 @@ void _NSSExceptionHandler(int signal) {
     static dispatch_once_t onceToken ;
     dispatch_once(&onceToken, ^{
         _uException = [[super allocWithZone:NULL] init] ;
-        [self regUncaughtExceptionHandler];
+        NSSetAllExceptionHandler (&_NCUExceptionHandler);
     }) ;
     return _uException ;
 }
@@ -196,54 +114,27 @@ void _NSSExceptionHandler(int signal) {
     return [_NCUException shareInstance];
 }
 
-
-+ (void)regUncaughtExceptionHandler {
-    NSSetUncaughtExceptionHandler (&_NCUExceptionHandler);
-
-    signal(SIGABRT, _NSSExceptionHandler);
-    signal(SIGILL, _NSSExceptionHandler);
-    signal(SIGSEGV, _NSSExceptionHandler);
-    signal(SIGFPE, _NSSExceptionHandler);
-    signal(SIGBUS, _NSSExceptionHandler);
-    signal(SIGPIPE, _NSSExceptionHandler);
+-(void)exception:(NSException*)exception {
+    NSSetAllExceptionHandler (NULL);
     
-    signal(SIGHUP, _NSSExceptionHandler);
-    signal(SIGINT, _NSSExceptionHandler);
-    signal(SIGQUIT, _NSSExceptionHandler);
-    
-
-
-}
-
-+ (void)unRegUncaughtExceptionHandler {
-    NSSetUncaughtExceptionHandler(NULL);
-    signal(SIGABRT, SIG_DFL);
-    signal(SIGILL, SIG_DFL);
-    signal(SIGSEGV, SIG_DFL);
-    signal(SIGFPE, SIG_DFL);
-    signal(SIGBUS, SIG_DFL);
-    signal(SIGPIPE, SIG_DFL);
-    
-    signal(SIGHUP, SIG_DFL);
-    signal(SIGINT, SIG_DFL);
-    signal(SIGQUIT, SIG_DFL);
-}
-
--(void)exception:(NCUException*)exception {
-    [_NCUException unRegUncaughtExceptionHandler];
+    NCUException * ue = [[NCUException alloc] init];
+    ue.callStackSymbols = [exception callStackSymbols];
+    ue.callStackReturnAddresses = [exception callStackReturnAddresses];
+    ue.reason = [exception reason];
+    ue.name = [exception name];
+    ue.userInfo = [exception userInfo];
     
     if (self.screenshot) {
-        exception.screenshot = [self dataWithScreenshotInPNGFormat];//截屏
+        ue.screenshot = [self dataWithScreenshotInPNGFormat];//截屏
     }
     
     BOOL b = YES;
     if (self.ueHandler) {
-        b = self.ueHandler(exception);
+        b = self.ueHandler(ue);
     }
     if (b) {
-        printf("%s", [exception.exceptionString UTF8String]);
+        printf("%s", [ue.exceptionString UTF8String]);
     }
-
 }
 
 
@@ -290,7 +181,6 @@ void _NSSExceptionHandler(int signal) {
     
     return UIImagePNGRepresentation(image);
 }
-
 
 @end
 

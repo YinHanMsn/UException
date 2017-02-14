@@ -19,8 +19,8 @@
     [super viewDidLoad];
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         [NSThread sleepForTimeInterval:2];
-        //    signalException();//需要在模拟器或者真机上直接启动测试
-        uncaughtException();
+            signalException();//需要在模拟器或者真机上直接启动测试
+//        uncaughtException();
     });
     // Do any additional setup after loading the view, typically from a nib.
 }
@@ -32,5 +32,7 @@
 }
 
 
-
+-(void) touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    signalException();
+}
 @end
