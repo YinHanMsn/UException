@@ -14,6 +14,9 @@
 @end
 
 @implementation AppDelegate
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     [alertView dismissWithClickedButtonIndex:1 animated:NO];
     self.cancelRun = NO;
@@ -21,7 +24,7 @@
 
 -(void)exceptionAlert:(NCUException*)exception {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"程序出现了异常" message:exception.exceptionString delegate:self cancelButtonTitle:@"退出" otherButtonTitles:@"继续", nil];
-
+    
     [alert show];
     
     CFRunLoopRef runLoop = CFRunLoopGetCurrent();
@@ -33,6 +36,7 @@
     }
     CFRelease(allModes);
 }
+#pragma clang diagnostic pop
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
