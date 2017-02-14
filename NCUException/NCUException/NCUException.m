@@ -23,7 +23,7 @@
 @property (nonatomic, retain) NSData *screenshot;
 @property (nonatomic, copy) NSString* appInfo;
 @property (nonatomic, copy) NSString* exceptionString;
-@property (nonatomic, assign) BOOL isSignal;
+
 @end
 
 @implementation NCUException
