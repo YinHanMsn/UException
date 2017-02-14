@@ -175,39 +175,39 @@ void NSSetAllExceptionHandler(NSUncaughtExceptionHandler * handel) {
 
 
 
-static NSUncaughtExceptionHandler * old_uncaughtExceptionHandler = NULL;
-
-void NSChangeUncaughtExceptionHandler(void (^newHandler)(NSUncaughtExceptionHandler *handler)) {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        if (!newHandler) {
-            return;
-        }
-        double time = 3;
-        __block int32_t count = time * 1000;
-        double interval =  time/count;
-        dispatch_source_t timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_main_queue());
-        dispatch_source_set_timer(timer, DISPATCH_TIME_NOW, interval * NSEC_PER_SEC, 0);
-        dispatch_source_set_event_handler(timer, ^{
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-            OSAtomicDecrement32(&count);
-#pragma clang diagnostic pop
-            if (count == 0) {
-                dispatch_source_cancel(timer);
-            }
-            NSUncaughtExceptionHandler *handel = NSGetUncaughtExceptionHandler();
-            if (handel != old_uncaughtExceptionHandler) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    newHandler(handel);
-                });
-                old_uncaughtExceptionHandler = handel;
-            }
-        });
-        dispatch_source_set_cancel_handler(timer, ^{
-        });
-        dispatch_resume(timer);
-    });
-}
+//static NSUncaughtExceptionHandler * old_uncaughtExceptionHandler = NULL;
+//
+//void NSChangeUncaughtExceptionHandler(void (^newHandler)(NSUncaughtExceptionHandler *handler)) {
+//    static dispatch_once_t onceToken;
+//    dispatch_once(&onceToken, ^{
+//        if (!newHandler) {
+//            return;
+//        }
+//        double time = 3;
+//        __block int32_t count = time * 1000;
+//        double interval =  time/count;
+//        dispatch_source_t timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_main_queue());
+//        dispatch_source_set_timer(timer, DISPATCH_TIME_NOW, interval * NSEC_PER_SEC, 0);
+//        dispatch_source_set_event_handler(timer, ^{
+//#pragma clang diagnostic push
+//#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+//            OSAtomicDecrement32(&count);
+//#pragma clang diagnostic pop
+//            if (count == 0) {
+//                dispatch_source_cancel(timer);
+//            }
+//            NSUncaughtExceptionHandler *handel = NSGetUncaughtExceptionHandler();
+//            if (handel != old_uncaughtExceptionHandler) {
+//                dispatch_async(dispatch_get_main_queue(), ^{
+//                    newHandler(handel);
+//                });
+//                old_uncaughtExceptionHandler = handel;
+//            }
+//        });
+//        dispatch_source_set_cancel_handler(timer, ^{
+//        });
+//        dispatch_resume(timer);
+//    });
+//}
 
 
