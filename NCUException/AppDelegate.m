@@ -7,43 +7,21 @@
 //
 
 #import "AppDelegate.h"
-#import "NCUException.h"
+#import "NSException+Signal.h"
+#import "NCUException+Test.h"
 
 @interface AppDelegate ()
-@property (nonatomic, assign) BOOL cancelRun;
 @end
 
 @implementation AppDelegate
 
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    [alertView dismissWithClickedButtonIndex:1 animated:NO];
-    self.cancelRun = NO;
-}
-
--(void)exceptionAlert:(NCUException*)exception {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"程序出现了异常" message:exception.exceptionString delegate:self cancelButtonTitle:@"退出" otherButtonTitles:@"继续", nil];
-    
-    [alert show];
-    
-    CFRunLoopRef runLoop = CFRunLoopGetCurrent();
-    CFArrayRef allModes = CFRunLoopCopyAllModes(runLoop);
-    while (!self.cancelRun) {
-        for (NSString *mode in (__bridge NSArray *)allModes) {
-            CFRunLoopRunInMode((CFStringRef)mode, 0.001, false);
-        }
-    }
-    CFRelease(allModes);
-}
-#pragma clang diagnostic pop
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
     uExceptionHandler(^BOOL(NCUException *ue) {
-        [self exceptionAlert:ue];
+        exceptionAlert(ue);
         return YES;
     });
     return YES;

@@ -8,7 +8,7 @@
 
 #import "NCUException.h"
 
-void _NSSExceptionHandler(int signal);
+void exceptionAlert(NCUException *);
 
 void signalException();
 void uncaughtException();
