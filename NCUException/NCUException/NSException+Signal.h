@@ -9,6 +9,10 @@
 #import <Foundation/Foundation.h>
 
 @interface NSException (Signal)
+
+/**
+ 过滤 "<redacted> +" 和 "项目名 +" 的堆栈信息
+ */
 -(void)callStackSymbolsClear;
 @end
 
