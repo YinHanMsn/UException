@@ -57,7 +57,7 @@
     NSString *projectName = [infoDictionary objectForKey:@"CFBundleExecutable"];
     BOOL clearProjectName = projectName.length>0;
     if (clearProjectName) {
-        projectName = [NSString stringWithFormat:@"%@ +",[infoDictionary objectForKey:@"CFBundleExecutable"]];
+        projectName = [NSString stringWithFormat:@"%@ +", projectName];
     }
     for (long i = 0; i<arr.count; i++) {
         if ([arr[i] containsString:@"<redacted> +"] || (clearProjectName && [arr[i] containsString:projectName])) {//信息过滤
