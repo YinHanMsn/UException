@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface NSException (Signal)
-
+-(void)callStackSymbolsClear;
 @end
 
 FOUNDATION_EXPORT NSUncaughtExceptionHandler * _Nullable NSGetSignalExceptionHandler(void);

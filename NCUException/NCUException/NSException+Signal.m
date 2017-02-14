@@ -51,6 +51,23 @@
     objc_setAssociatedObject(self, @selector(se_callStackSymbols), se_callStackSymbols, OBJC_ASSOCIATION_COPY);
 }
 
+-(void)callStackSymbolsClear {
+    NSMutableArray * arr = [self.callStackSymbols mutableCopy];
+    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+    NSString *projectName = [infoDictionary objectForKey:@"CFBundleExecutable"];
+    BOOL clearProjectName = projectName.length>0;
+    if (clearProjectName) {
+        projectName = [NSString stringWithFormat:@"%@ +",[infoDictionary objectForKey:@"CFBundleExecutable"]];
+    }
+    for (long i = 0; i<arr.count; i++) {
+        if ([arr[i] containsString:@"<redacted> +"] || (clearProjectName && [arr[i] containsString:projectName])) {//信息过滤
+            [arr removeObjectAtIndex:i];
+            i--;
+        }
+    }
+    self.se_callStackSymbols = arr;
+}
+
 @end
 
 
