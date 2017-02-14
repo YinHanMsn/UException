@@ -44,7 +44,7 @@
 }
 
 -(NSArray<NSString *> *)se_callStackSymbols {
-   return objc_getAssociatedObject(self, @selector(se_callStackSymbols));
+    return objc_getAssociatedObject(self, @selector(se_callStackSymbols));
 }
 
 -(void)setSe_callStackSymbols:(NSArray<NSString *> *)se_callStackSymbols {
