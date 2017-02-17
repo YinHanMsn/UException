@@ -11,7 +11,7 @@
 @interface NSException (Signal)
 
 /**
- 过滤 "<redacted> +" 和 "项目名 +" 的堆栈信息
+ 过滤 "<redacted> +"
  */
 -(void)callStackSymbolsClear;
 @end
@@ -23,4 +23,12 @@ FOUNDATION_EXPORT NSUncaughtExceptionHandler * _Nullable NSGetAllExceptionHandle
 FOUNDATION_EXPORT void NSSetAllExceptionHandler(NSUncaughtExceptionHandler * _Nullable);
 
 
-//FOUNDATION_EXPORT void NSChangeUncaughtExceptionHandler(void (^ _Nonnull newHandler)(NSUncaughtExceptionHandler * _Nullable handler));//每(3/1000)秒内检测是否变化，有效时间3秒,执行一次
+//FOUNDATIOORT void NSChangeUncaughtExceptionHandler(void (^ _Nonnull newHandler)(NSUncaughtExceptionHandler * _Nullable handler));//每(3/1000)秒内检测是否变化，有效时间3秒,执行一次
+
+
+/**
+ app是否在调试模式下运行
+
+ @return true 调试模式下运行
+ */
+FOUNDATION_EXPORT bool NSAppIsBeingTraced();

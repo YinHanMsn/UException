@@ -47,6 +47,7 @@ void exceptionAlert(NCUException *exception) {
 }
 
 void signalException() {
+//    abort();
     Test *t;
     t->a = 1;
 }

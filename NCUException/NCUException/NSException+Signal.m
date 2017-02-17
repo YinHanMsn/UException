@@ -53,14 +53,8 @@
 
 -(void)callStackSymbolsClear {
     NSMutableArray * arr = [self.callStackSymbols mutableCopy];
-    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-    NSString *projectName = [infoDictionary objectForKey:@"CFBundleExecutable"];
-    BOOL clearProjectName = projectName.length>0;
-    if (clearProjectName) {
-        projectName = [NSString stringWithFormat:@"%@ +", projectName];
-    }
     for (long i = 0; i<arr.count; i++) {
-        if ([arr[i] containsString:@"<redacted> +"] || (clearProjectName && [arr[i] containsString:projectName])) {//信息过滤
+        if ([arr[i] containsString:@"<redacted> +"]) {//信息过滤
             [arr removeObjectAtIndex:i];
             i--;
         }
@@ -226,5 +220,18 @@ void NSSetAllExceptionHandler(NSUncaughtExceptionHandler * handel) {
 //        dispatch_resume(timer);
 //    });
 //}
+
+
+#include <sys/sysctl.h>
+#include <unistd.h>
+bool NSAppIsBeingTraced(void) {
+    struct kinfo_proc procInfo;
+    size_t structSize = sizeof(procInfo);
+    int mib[] = {CTL_KERN, KERN_PROC, KERN_PROC_PID, getpid()};
+    if(sysctl(mib, sizeof(mib)/sizeof(*mib), &procInfo, &structSize, NULL, 0) != 0) {
+        return false;
+    }
+    return (procInfo.kp_proc.p_flag & P_TRACED) != 0;
+}
 
 
