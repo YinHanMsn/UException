@@ -15,6 +15,10 @@
  */
 -(void)callStackSymbolsClear;
 
+
+/**
+ 追加堆栈slide地址
+ */
 -(void)callStackSymbolsSlide;
 
 @end
