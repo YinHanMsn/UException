@@ -14,6 +14,9 @@
  过滤 "<redacted> +"
  */
 -(void)callStackSymbolsClear;
+
+-(void)callStackSymbolsSlide;
+
 @end
 
 FOUNDATION_EXPORT NSUncaughtExceptionHandler * _Nullable NSGetSignalExceptionHandler(void);
@@ -31,4 +34,4 @@ FOUNDATION_EXPORT void NSSetAllExceptionHandler(NSUncaughtExceptionHandler * _Nu
 
  @return true 调试模式下运行
  */
-FOUNDATION_EXPORT bool NSAppIsBeingTraced();
+FOUNDATION_EXPORT bool NSAppIsBeingTraced(void);

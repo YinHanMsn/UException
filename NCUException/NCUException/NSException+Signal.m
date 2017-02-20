@@ -10,6 +10,8 @@
 #import <objc/runtime.h>
 #include <libkern/OSAtomic.h>
 #include <execinfo.h>
+#import "ASLRSlide.h"
+
 
 @interface NSException ()
 @property (nonatomic, copy) NSArray<NSString *> *se_callStackSymbols;
@@ -57,6 +59,21 @@
         if ([arr[i] containsString:@"<redacted> +"]) {//信息过滤
             [arr removeObjectAtIndex:i];
             i--;
+        }
+    }
+    self.se_callStackSymbols = arr;
+}
+
+-(void)callStackSymbolsSlide {
+    NSArray * slideArr = [ASLRSlide slides];
+    NSMutableArray * arr = [self.callStackSymbols mutableCopy];
+    for (long i = 0; i<arr.count; i++) {
+        NSString *imageName = [arr[i] componentsSeparatedByString:@"0x"].firstObject;
+        for (ASLRSlide * s in slideArr) {
+            if ([imageName containsString:s.imageName]) {
+                arr[i] = [NSString stringWithFormat:@"%@\t(slide: %@)", arr[i], s.slideStr];
+                break;
+            }
         }
     }
     self.se_callStackSymbols = arr;

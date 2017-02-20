@@ -102,7 +102,7 @@ void _NCUExceptionHandler(NSException *exception) {
     dispatch_once(&onceToken, ^{
         _uException = [[super allocWithZone:NULL] init] ;
         NSSetAllExceptionHandler (&_NCUExceptionHandler);
-    }) ;
+    });
     return _uException ;
 }
 
