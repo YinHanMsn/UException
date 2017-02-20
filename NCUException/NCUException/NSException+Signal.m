@@ -8,10 +8,8 @@
 
 #import "NSException+Signal.h"
 #import <objc/runtime.h>
-#include <libkern/OSAtomic.h>
-#include <execinfo.h>
-#import "ASLRSlide.h"
-
+#import <libkern/OSAtomic.h>
+#import <execinfo.h>
 
 @interface NSException ()
 @property (nonatomic, copy) NSArray<NSString *> *se_callStackSymbols;
@@ -53,31 +51,31 @@
     objc_setAssociatedObject(self, @selector(se_callStackSymbols), se_callStackSymbols, OBJC_ASSOCIATION_COPY);
 }
 
--(void)callStackSymbolsClear {
-    NSMutableArray * arr = [self.callStackSymbols mutableCopy];
-    for (long i = 0; i<arr.count; i++) {
-        if ([arr[i] containsString:@"<redacted> +"]) {//信息过滤
-            [arr removeObjectAtIndex:i];
-            i--;
-        }
-    }
-    self.se_callStackSymbols = arr;
-}
-
--(void)callStackSymbolsSlide {
-    NSArray * slideArr = [ASLRSlide slides];
-    NSMutableArray * arr = [self.callStackSymbols mutableCopy];
-    for (long i = 0; i<arr.count; i++) {
-        NSString *imageName = [arr[i] componentsSeparatedByString:@"0x"].firstObject;
-        for (ASLRSlide * s in slideArr) {
-            if ([imageName containsString:s.imageName]) {
-                arr[i] = [NSString stringWithFormat:@"%@\t(slide: %@)", arr[i], s.slideStr];
-                break;
-            }
-        }
-    }
-    self.se_callStackSymbols = arr;
-}
+//-(void)callStackSymbolsClear {
+//    NSMutableArray * arr = [self.callStackSymbols mutableCopy];
+//    for (long i = 0; i<arr.count; i++) {
+//        if ([arr[i] containsString:@"<redacted> +"]) {//信息过滤
+//            [arr removeObjectAtIndex:i];
+//            i--;
+//        }
+//    }
+//    self.se_callStackSymbols = arr;
+//}
+//
+//-(void)callStackSymbolsSlide {
+//    NSArray * slideArr = [ASLRSlide slides];
+//    NSMutableArray * arr = [self.callStackSymbols mutableCopy];
+//    for (long i = 0; i<arr.count; i++) {
+//        NSString *imageName = [arr[i] componentsSeparatedByString:@"0x"].firstObject;
+//        for (ASLRSlide * s in slideArr) {
+//            if ([imageName containsString:s.imageName]) {
+//                arr[i] = [NSString stringWithFormat:@"%@\t(slide: %@)", arr[i], s.slideStr];
+//                break;
+//            }
+//        }
+//    }
+//    self.se_callStackSymbols = arr;
+//}
 
 @end
 
@@ -239,8 +237,8 @@ void NSSetAllExceptionHandler(NSUncaughtExceptionHandler * handel) {
 //}
 
 
-#include <sys/sysctl.h>
-#include <unistd.h>
+#import <sys/sysctl.h>
+#import <unistd.h>
 bool NSAppIsBeingTraced(void) {
     struct kinfo_proc procInfo;
     size_t structSize = sizeof(procInfo);

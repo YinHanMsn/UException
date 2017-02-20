@@ -67,6 +67,8 @@
     return _exceptionString;
 }
 
+
+
 //-(NSString *)description {
 //    return [NSString stringWithFormat:@"%@\n%@", self.exceptionString, self.screenshot.description];
 //}
@@ -100,7 +102,7 @@ void _NCUExceptionHandler(NSException *exception) {
 +(instancetype) shareInstance {
     static dispatch_once_t onceToken ;
     dispatch_once(&onceToken, ^{
-        _uException = [[super allocWithZone:NULL] init] ;
+        _uException = [[super allocWithZone:NULL] init];
         NSSetAllExceptionHandler (&_NCUExceptionHandler);
     });
     return _uException ;

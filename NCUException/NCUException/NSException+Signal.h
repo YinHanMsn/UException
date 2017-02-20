@@ -10,17 +10,6 @@
 
 @interface NSException (Signal)
 
-/**
- 过滤 "<redacted> +"
- */
--(void)callStackSymbolsClear;
-
-
-/**
- 追加堆栈slide地址
- */
--(void)callStackSymbolsSlide;
-
 @end
 
 FOUNDATION_EXPORT NSUncaughtExceptionHandler * _Nullable NSGetSignalExceptionHandler(void);
@@ -29,8 +18,6 @@ FOUNDATION_EXPORT void NSSetSignalExceptionHandler(NSUncaughtExceptionHandler * 
 FOUNDATION_EXPORT NSUncaughtExceptionHandler * _Nullable NSGetAllExceptionHandler(void);
 FOUNDATION_EXPORT void NSSetAllExceptionHandler(NSUncaughtExceptionHandler * _Nullable);
 
-
-//FOUNDATIOORT void NSChangeUncaughtExceptionHandler(void (^ _Nonnull newHandler)(NSUncaughtExceptionHandler * _Nullable handler));//每(3/1000)秒内检测是否变化，有效时间3秒,执行一次
 
 
 /**
