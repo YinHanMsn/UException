@@ -21,14 +21,12 @@ static BOOL cancelRun;
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
 + (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     [alertView dismissWithClickedButtonIndex:1 animated:NO];
-    cancelRun = NO;
+    cancelRun = YES;
 }
 
 +(void)exceptionAlert:(NCUException*)exception {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"程序出现了异常" message:exception.exceptionString delegate:self cancelButtonTitle:@"退出" otherButtonTitles:@"继续", nil];
-    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"程序出现了异常" message:exception.exceptionString delegate:self cancelButtonTitle:@"确认" otherButtonTitles:nil, nil];
     [alert show];
-    
     CFRunLoopRef runLoop = CFRunLoopGetCurrent();
     CFArrayRef allModes = CFRunLoopCopyAllModes(runLoop);
     while (!cancelRun) {

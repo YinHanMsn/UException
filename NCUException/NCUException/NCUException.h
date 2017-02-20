@@ -33,7 +33,7 @@
 
  @param handler 返回YES继续打印
  */
-void uExceptionHandler(BOOL(^handler)(NCUException* ue));
+void uExceptionHandler(BOOL doPrint, void(^handler)(NCUException* ue));
 
 /**
  配置截屏

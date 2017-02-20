@@ -19,9 +19,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    uExceptionHandler(^BOOL(NCUException *ue) {
+    uExceptionHandler(YES, ^(NCUException *ue) {
         exceptionAlert(ue);
-        return YES;
     });
     return YES;
 }

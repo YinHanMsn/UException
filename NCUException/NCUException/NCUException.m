@@ -187,8 +187,13 @@ void _NCUExceptionHandler(NSException *exception) {
 @end
 
 #pragma mark - Handler or Config
-void uExceptionHandler(BOOL(^handler)(NCUException* ue)) {
-    [_uException exceptionHandler:handler];
+void uExceptionHandler(BOOL doPrint, void(^handler)(NCUException* ue)) {
+    [_uException exceptionHandler:^BOOL(NCUException *ue) {
+        if (handler) {
+            handler(ue);
+        }
+        return doPrint;
+    }];
 }
 void uExceptionScreenshot(BOOL screenshot) {
     _uException.screenshot = screenshot;
