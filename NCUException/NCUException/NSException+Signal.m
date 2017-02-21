@@ -89,7 +89,7 @@ static NSUncaughtExceptionHandler * se_allExceptionHandler = NULL;
 volatile int32_t UncaughtExceptionCount = 0;
 //最大能够处理的异常个数
 volatile int32_t UncaughtExceptionMaximum = 10;
-//SIGABRT 程序由于abort()函数调用发生的程序中止信号
+//SIGABRT 程序由于abort()函数调用发生的程序中止信号，通常异常是由于某个对象接收到未实现的消息引起的。 或者，用简单的话说，在某个对象上调用了不存在的方法。
 //SIGILL 程序由于非法指令产生的程序中止信号
 //SIGSEGV 程序由于无效内存的引用导致的程序中止信号
 //SIGFPE 程序由于浮点数异常导致的程序中止信号
