@@ -12,6 +12,9 @@
 
 @end
 
+//FOUNDATION_EXPORT NSUncaughtExceptionHandler * _Nullable NSGetUncaughtExceptionHandler(void);
+//FOUNDATION_EXPORT void NSSetUncaughtExceptionHandler(NSUncaughtExceptionHandler * _Nullable);
+
 FOUNDATION_EXPORT NSUncaughtExceptionHandler * _Nullable NSGetSignalExceptionHandler(void);
 FOUNDATION_EXPORT void NSSetSignalExceptionHandler(NSUncaughtExceptionHandler * _Nullable);
 

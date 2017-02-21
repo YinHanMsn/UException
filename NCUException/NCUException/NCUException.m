@@ -195,6 +195,7 @@ void uExceptionHandler(BOOL doPrint, void(^handler)(NCUException* ue)) {
         return doPrint;
     }];
 }
+
 void uExceptionScreenshot(BOOL screenshot) {
     _uException.screenshot = screenshot;
 }

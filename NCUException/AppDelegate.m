@@ -22,6 +22,7 @@
     uExceptionHandler(YES, ^(NCUException *ue) {
         exceptionAlert(ue);
     });
+
     return YES;
 }
 

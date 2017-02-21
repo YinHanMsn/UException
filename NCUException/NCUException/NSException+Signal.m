@@ -102,8 +102,8 @@ volatile int32_t UncaughtExceptionMaximum = 10;
 //SIGQUIT 和SIGINT类似, 但由QUIT字符(通常是Ctrl-)来控制. 进程在因收到SIGQUIT退出时会产生core文件, 在这个意义上类似于一个程序错误信号
 void se_signalExceptionHandler(int signal) {
     //获取堆栈
-    void* callstack[10240];
-    int frames = backtrace(callstack, 10240);
+    void* callstack[1024];
+    int frames = backtrace(callstack, 1024);
     char **strs = backtrace_symbols(callstack, frames);
     long i;
     NSMutableArray *callStackSymbols = [NSMutableArray arrayWithCapacity:frames];
