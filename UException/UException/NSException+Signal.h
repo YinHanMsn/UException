@@ -8,10 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NSException (Signal)
-
-@end
-
 //FOUNDATION_EXPORT NSUncaughtExceptionHandler * _Nullable NSGetUncaughtExceptionHandler(void);
 //FOUNDATION_EXPORT void NSSetUncaughtExceptionHandler(NSUncaughtExceptionHandler * _Nullable);
 
