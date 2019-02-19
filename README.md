@@ -5,7 +5,7 @@
 ```
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     uExceptionHandler(YES, ^(UException *ue) {
-        //exception
+        //exception 崩溃信息
     });
     return YES;
 }
