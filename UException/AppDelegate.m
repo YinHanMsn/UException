@@ -1,6 +1,6 @@
 //
 //  AppDelegate.m
-//  NCUException
+//  UException
 //
 //  Created by YLCHUN on 2017/2/13.
 //  Copyright © 2017年 ylchun. All rights reserved.
@@ -8,7 +8,7 @@
 
 #import "AppDelegate.h"
 #import "NSException+Signal.h"
-#import "NCUException+Test.h"
+#import "UException+Test.h"
 
 @interface AppDelegate ()
 @end
@@ -19,7 +19,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    uExceptionHandler(YES, ^(NCUException *ue) {
+    uExceptionHandler(YES, ^(UException *ue) {
         exceptionAlert(ue);
     });
 

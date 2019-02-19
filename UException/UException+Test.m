@@ -1,12 +1,12 @@
 //
-//  NCUException+Test.m
-//  NCUException
+//  UException+Test.m
+//  UException
 //
 //  Created by YLCHUN on 2017/2/13.
 //  Copyright © 2017年 ylchun. All rights reserved.
 //
 
-#import "NCUException+Test.h"
+#import "UException+Test.h"
 #import <UIKit/UIKit.h>
 
 @interface Test : NSObject{
@@ -24,7 +24,7 @@ static BOOL cancelRun;
     cancelRun = YES;
 }
 
-+(void)exceptionAlert:(NCUException*)exception {
++(void)exceptionAlert:(UException*)exception {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"程序出现了异常" message:exception.exceptionString delegate:self cancelButtonTitle:@"确认" otherButtonTitles:nil, nil];
     [alert show];
     CFRunLoopRef runLoop = CFRunLoopGetCurrent();
@@ -40,7 +40,7 @@ static BOOL cancelRun;
 
 @end
 
-void exceptionAlert(NCUException *exception) {
+void exceptionAlert(UException *exception) {
     [Test exceptionAlert:exception];
 }
 

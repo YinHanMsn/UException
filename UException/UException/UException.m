@@ -1,19 +1,19 @@
 //
-//  NCUException.m
-//  NCUException
+//  UException.m
+//  UException
 //
 //  Created by YLCHUN on 2017/2/13.
 //  Copyright © 2017年 ylchun. All rights reserved.
 //
 
 
-#import "NCUException.h"
+#import "UException.h"
 #import "NSException+Signal.h"
 #import <UIKit/UIKit.h>
 
-#pragma mark - NCUException
+#pragma mark - UException
 
-@interface NCUException()
+@interface UException()
 @property (nonatomic, copy) NSDate *time;
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, copy) NSString *reason;
@@ -26,7 +26,7 @@
 
 @end
 
-@implementation NCUException
+@implementation UException
 
 -(instancetype)init {
     self = [super init];
@@ -75,27 +75,27 @@
 
 @end
 
-#pragma mark - _NCUException
+#pragma mark - _UException
 
-@interface _NCUException :NSObject
-@property (nonatomic, copy) BOOL(^ueHandler)(NCUException* ue);
+@interface _UException :NSObject
+@property (nonatomic, copy) BOOL(^ueHandler)(UException* ue);
 @property (nonatomic, assign) BOOL screenshot;
--(void)exception:(NCUException*) exception;
+-(void)exception:(UException*) exception;
 
 @end
 
-static _NCUException* _uException = nil;
+static _UException* _uException = nil;
 
-void _NCUExceptionHandler(NSException *exception) {
+void _UExceptionHandler(NSException *exception) {
     [_uException performSelectorOnMainThread:@selector(exception:) withObject:exception waitUntilDone:YES];
 }
 
-@implementation _NCUException
+@implementation _UException
 
-#if NCUException_enabled
+#if UException_enabled
 +(void)load {
     [super load];
-    [_NCUException shareInstance];
+    [_UException shareInstance];
 }
 #endif
 
@@ -103,23 +103,23 @@ void _NCUExceptionHandler(NSException *exception) {
     static dispatch_once_t onceToken ;
     dispatch_once(&onceToken, ^{
         _uException = [[super allocWithZone:NULL] init];
-        NSSetAllExceptionHandler (&_NCUExceptionHandler);
+        NSSetAllExceptionHandler (&_UExceptionHandler);
     });
     return _uException ;
 }
 
 +(id) allocWithZone:(struct _NSZone *)zone {
-    return [_NCUException shareInstance] ;
+    return [_UException shareInstance] ;
 }
 
 -(id) copyWithZone:(struct _NSZone *)zone {
-    return [_NCUException shareInstance];
+    return [_UException shareInstance];
 }
 
 -(void)exception:(NSException*)exception {
     NSSetAllExceptionHandler (NULL);
     
-    NCUException * ue = [[NCUException alloc] init];
+    UException * ue = [[UException alloc] init];
     ue.callStackSymbols = [exception callStackSymbols];
     ue.callStackReturnAddresses = [exception callStackReturnAddresses];
     ue.reason = [exception reason];
@@ -140,7 +140,7 @@ void _NCUExceptionHandler(NSException *exception) {
 }
 
 
--(void)exceptionHandler:(BOOL(^)(NCUException* ue))handler {
+-(void)exceptionHandler:(BOOL(^)(UException* ue))handler {
     self.ueHandler = handler;
 }
 
@@ -187,8 +187,8 @@ void _NCUExceptionHandler(NSException *exception) {
 @end
 
 #pragma mark - Handler or Config
-void uExceptionHandler(BOOL doPrint, void(^handler)(NCUException* ue)) {
-    [_uException exceptionHandler:^BOOL(NCUException *ue) {
+void uExceptionHandler(BOOL doPrint, void(^handler)(UException* ue)) {
+    [_uException exceptionHandler:^BOOL(UException *ue) {
         if (handler) {
             handler(ue);
         }

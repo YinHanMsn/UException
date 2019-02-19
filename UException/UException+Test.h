@@ -1,14 +1,14 @@
 //
-//  NCUException+Test.h
-//  NCUException
+//  UException+Test.h
+//  UException
 //
 //  Created by YLCHUN on 2017/2/13.
 //  Copyright © 2017年 ylchun. All rights reserved.
 //
 
-#import "NCUException.h"
+#import "UException.h"
 
-void exceptionAlert(NCUException *);
+void exceptionAlert(UException *);
 
 void signalException();
 void uncaughtException();

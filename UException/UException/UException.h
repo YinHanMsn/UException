@@ -1,15 +1,15 @@
 //
-//  NCUException.h
-//  NCUException
+//  UException.h
+//  UException
 //
 //  Created by YLCHUN on 2017/2/13.
 //  Copyright © 2017年 ylchun. All rights reserved.
 //
-#define NCUException_enabled 1
+#define UException_enabled 1
 
 #import <Foundation/Foundation.h>
 
-@interface NCUException : NSObject
+@interface UException : NSObject
 
 @property (readonly, copy) NSDate *time;
 @property (readonly, copy) NSString *name;
@@ -33,7 +33,7 @@
 
  @param handler 返回YES继续打印
  */
-void uExceptionHandler(BOOL doPrint, void(^handler)(NCUException* ue));
+void uExceptionHandler(BOOL doPrint, void(^handler)(UException* ue));
 
 /**
  配置截屏

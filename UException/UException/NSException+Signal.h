@@ -1,6 +1,6 @@
 //
 //  NSException+Signal.h
-//  NCUException
+//  UException
 //
 //  Created by YLCHUN on 2017/2/14.
 //  Copyright © 2017年 ylchun. All rights reserved.
