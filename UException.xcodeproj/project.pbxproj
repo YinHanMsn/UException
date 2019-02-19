@@ -32,7 +32,7 @@
 		A95A07861E5429FB00173CEF /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		A95A07881E542A0300173CEF /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		A95A078A1E542A0F00173CEF /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
-		A95A078C1E54397400173CEF /* NCUException.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NCUException.entitlements; sourceTree = "<group>"; };
+		A95A078C1E54397400173CEF /* UException.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = UException.entitlements; sourceTree = "<group>"; };
 		A977ADE21E52B11D00D7EAD4 /* UException.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UException.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A977ADE61E52B11D00D7EAD4 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		A977ADE81E52B11D00D7EAD4 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -98,7 +98,7 @@
 		A977ADE41E52B11D00D7EAD4 /* UException */ = {
 			isa = PBXGroup;
 			children = (
-				A95A078C1E54397400173CEF /* NCUException.entitlements */,
+				A95A078C1E54397400173CEF /* UException.entitlements */,
 				A977ADFC1E52B16500D7EAD4 /* UException */,
 				A977ADFF1E52B16500D7EAD4 /* UException+Test.h */,
 				A977AE001E52B16500D7EAD4 /* UException+Test.m */,
