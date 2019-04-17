@@ -15,12 +15,29 @@
 
 @implementation AppDelegate
 
+static void keeploop(void(^task)(void(^quit)(void))) {
+    __block bool cancelRun = false;
+    task(^void() {
+        cancelRun = true;
+    });
+    
+    CFRunLoopRef runLoop = CFRunLoopGetCurrent();
+    CFArrayRef allModes = CFRunLoopCopyAllModes(runLoop);
+    while (!cancelRun) {
+        for (CFIndex i = CFArrayGetCount(allModes) - 1; i >= 0; i--) {
+            CFStringRef model = CFArrayGetValueAtIndex(allModes, i);
+            CFRunLoopRunInMode(model, 0.001, false);
+            CFRelease(model);
+        }
+    }
+    CFRelease(allModes);
+}
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     uExceptionHandler(YES, ^(UException *ue) {
-        exceptionAlert(ue);
+//        exceptionAlert(ue);
     });
 
     return YES;
@@ -50,6 +67,7 @@
 
 
 - (void)applicationWillTerminate:(UIApplication *)application {
+
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 

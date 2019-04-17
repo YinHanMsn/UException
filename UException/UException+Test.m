@@ -30,8 +30,10 @@ static BOOL cancelRun;
     CFRunLoopRef runLoop = CFRunLoopGetCurrent();
     CFArrayRef allModes = CFRunLoopCopyAllModes(runLoop);
     while (!cancelRun) {
-        for (NSString *mode in (__bridge NSArray *)allModes) {
-            CFRunLoopRunInMode((CFStringRef)mode, 0.001, false);
+        for (CFIndex i = CFArrayGetCount(allModes) - 1; i >= 0; i--) {
+            CFStringRef model = CFArrayGetValueAtIndex(allModes, i);
+            CFRunLoopRunInMode(model, 0.001, false);
+            CFRelease(model);
         }
     }
     CFRelease(allModes);
